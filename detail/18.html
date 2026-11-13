@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="zh-CN">
-<head>
+<head><script>window.__STATIC_MODE__=true;</script>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <link rel="icon" type="image/svg+xml" href="../static/favicon.svg">
@@ -236,14 +236,14 @@ footer{border-top:1px solid #edf0f4;margin-top:48px;padding:22px 0;color:#929bad
       <p class="detail-content">初步具有剪辑软件的雏形，含音视频轨、文本轨、可以任意导入导出视频素材，还有轨道上的视频素材连接吸附、视频素材的裁剪功能等，可以使用常见的滤镜能力、过渡效果、蒙版能力，还在进一步实现更全面的剪辑能力，敬请关注！</p>
 
       <div class="detail-meta">
-        <span class="muted">累计点赞 <b>0</b></span>
+        <span class="muted">累计点赞 <b>1</b></span>
         <span class="muted">发布于 2026-11-12</span>
       </div>
 
       <div class="detail-actions">
         
         
-        <button class="like " data-like="18">♡ <b>0</b></button>
+        <button class="like " data-like="18">♡ <b>1</b></button>
       </div>
     </div>
   </div>
@@ -257,7 +257,7 @@ footer{border-top:1px solid #edf0f4;margin-top:48px;padding:22px 0;color:#929bad
   </div>
   <div class="grid">
     
-<article class="card" data-category="工具" data-likes="1" data-date="0" data-id="14">
+<article class="card" data-category="工具" data-likes="2" data-date="0" data-id="14">
   <div class="cover" style="background:#eef2ff">
     <img src="../static/uploads/1794489919-0dfa6ed76bf84c359e27556f2d8cc6d6.png" alt="“只为你记账”桌面记账软件">
     <span class="kind">工具</span>
@@ -268,7 +268,7 @@ footer{border-top:1px solid #edf0f4;margin-top:48px;padding:22px 0;color:#929bad
     <div class="tags"><span class="tag">Python</span><span class="tag">PyWebview</span><span class="tag">FastApi</span><span class="tag">SQLite</span><span class="tag">HTML</span><span class="tag">CSS</span><span class="tag">JS</span></div>
     <div class="card-bottom">
       <span class="muted">作品展示</span>
-      <button class="like " data-like="14">♡ <b>1</b></button>
+      <button class="like " data-like="14">♡ <b>2</b></button>
     </div>
   </div>
 </article>
@@ -326,7 +326,39 @@ if(navToggle&&siteNav){
     if(!siteNav.contains(e.target)&&!navToggle.contains(e.target))setNav(false);
   });
 }
+// 点赞：在线版走后端接口；静态演示版（window.__STATIC_MODE__ 由静态发布注入）走本机 localStorage，不发请求。
+const LIKE_STORE_KEY = 'cms_static_likes';
+function _likeStore(){ try{ return JSON.parse(localStorage.getItem(LIKE_STORE_KEY)||'{}'); }catch(e){ return {}; } }
+function _saveLikeStore(s){ try{ localStorage.setItem(LIKE_STORE_KEY, JSON.stringify(s)); }catch(e){} }
+function _paintLike(btn, liked, count){
+  btn.classList.toggle('liked', liked);
+  btn.innerHTML = (liked ? '♥' : '♡') + ' <b>' + count + '</b>';
+}
+function _localToggleLike(id, btn){
+  const store = _likeStore();
+  const key = String(id);
+  const b = btn.querySelector('b');
+  const snap = parseInt(b ? b.textContent : '0', 10) || 0;
+  const rec = store[key];
+  const liked = !rec;
+  const count = liked ? (rec ? rec.count : snap) + 1 : Math.max(0, rec ? rec.count - 1 : snap - 1);
+  if(liked){ store[key] = { count: count }; } else { delete store[key]; }
+  _saveLikeStore(store);
+  _paintLike(btn, liked, count);
+  return { liked: liked, likes: count, local: true };
+}
+function _restoreStaticLikes(){
+  if(!window.__STATIC_MODE__) return;
+  const store = _likeStore();
+  document.querySelectorAll('[data-like]').forEach(btn=>{
+    const rec = store[String(btn.dataset.like)];
+    if(rec){ _paintLike(btn, true, rec.count); }
+  });
+}
+if(window.__STATIC_MODE__){ _restoreStaticLikes(); }
+
 async function toggleLike(id, btn){
+  if(window.__STATIC_MODE__){ return _localToggleLike(id, btn); }
   const r = await fetch('/api/projects/'+id+'/like', {method:'POST', credentials:'same-origin'});
   const data = await r.json().catch(()=>({detail:r.statusText}));
   if(!r.ok) throw new Error(data.detail || r.statusText);
@@ -340,7 +372,8 @@ document.addEventListener('click', async e=>{
   e.preventDefault();
   try{
     const data = await toggleLike(Number(l.dataset.like), l);
-    toast(data.liked ? '感谢你的喜欢 ♥' : '已取消点赞');
+    if(data.local){ toast(data.liked ? '演示模式：已记下你的喜欢 ♥' : '演示模式：已取消（仅本机）'); }
+    else{ toast(data.liked ? '感谢你的喜欢 ♥' : '已取消点赞'); }
   }catch(err){ toast(err.message); }
 });
 
