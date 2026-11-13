@@ -1,0 +1,222 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="icon" type="image/svg+xml" href="static/favicon.svg">
+<link rel="icon" type="image/png" href="static/favicon.png" sizes="any">
+<title>小小软件藏宝阁</title>
+<meta name="keywords" content="小小软件珍宝阁,小小软件藏宝阁,软件开发,产品设计,作品集,开发者,独立开发者,开源项目">
+<meta name="description" content="个人软件开发与创意作品展示。">
+<meta property="og:image" content="static/uploads/1794476995-31f0a87c20154bb2b6c77f31b8b43e20.png">
+<style>
+:root{font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:#20283a;background:#fff}
+*{box-sizing:border-box}body{margin:0}button,a{font:inherit}button{cursor:pointer}
+.wrap{max-width:1000px;margin:auto;padding:0 24px}
+main.wrap{padding-top:5px}
+.top{position:sticky;top:0;background:#ffffffed;backdrop-filter:blur(12px);border-bottom:1px solid #edf0f4;z-index:5}
+.head{height:64px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.brand{border:0;background:none;font-weight:800;font-size:16px;display:flex;gap:10px;align-items:center;color:inherit;text-decoration:none;white-space:nowrap;min-width:0;flex:1 1 auto}
+.brand>span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.logo{background:#4f46e5;color:#fff;border-radius:9px;width:32px;height:32px;display:grid;place-items:center;overflow:hidden;flex:none}
+.logo img{width:100%;height:100%;object-fit:cover}
+nav{display:flex;gap:5px}.nav{border:0;background:none;color:#687386;border-radius:9px;padding:9px 13px;font-size:13px;text-decoration:none}
+.nav.active{background:#eef2ff;color:#4f46e5;font-weight:700}
+.nav-toggle{display:none;border:0;background:none;width:40px;height:40px;border-radius:9px;flex:none;align-items:center;justify-content:center;flex-direction:column;gap:5px;padding:0}
+.nav-toggle span{display:block;width:20px;height:2px;background:#20283a;border-radius:2px;transition:.2s}
+.nav-toggle.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+.nav-toggle.open span:nth-child(2){opacity:0}
+.nav-toggle.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+.eyebrow{font-size:11px;letter-spacing:1.5px;color:#6259db;font-weight:800}
+h1{font-size:clamp(36px,6vw,58px);line-height:1.16;letter-spacing:-2px;margin:17px 0;font-weight:850}
+.grad{background:linear-gradient(100deg,#4f46e5,#9564e8);background-clip:text;color:transparent}
+.lead{font-size:14px;line-height:2;color:#758095;max-width:650px}
+.btn{border:0;border-radius:9px;padding:11px 17px;background:#4f46e5;color:white;font-size:13px;font-weight:700;text-decoration:none;display:inline-block}
+.btn.light{background:#f1f3f8;color:#475569}
+.actions{display:flex;gap:10px;margin-top:23px;flex-wrap:wrap}
+.stats{display:flex;gap:36px;border-top:1px solid #edf0f4;margin-top:35px;padding-top:22px}
+.stat strong{font-size:23px;display:block}.stat span{font-size:11px;color:#8993a4}
+.section-head{display:flex;justify-content:space-between;align-items:end;margin:18px 0}
+.section-head h2,.section-title{font-size:25px;letter-spacing:-.7px;margin:5px 0;font-weight:800}
+.muted{font-size:12px;color:#8993a4}
+.text-link{border:0;background:none;color:#5148d4;font-size:12px;font-weight:700;text-decoration:none}
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.card{border:1px solid #e9edf3;border-radius:15px;overflow:hidden;transition:.2s;background:#fff}
+.card:hover{transform:translateY(-3px);box-shadow:0 12px 30px #202b4510}
+.cover{height:155px;display:grid;place-items:center;position:relative;overflow:hidden}
+.cover img{width:100%;height:100%;object-fit:cover}
+.symbol{font-size:42px;font-weight:850;letter-spacing:-2px;color:#3730a3}
+.kind{position:absolute;top:12px;left:12px;background:#ffffffbd;border-radius:5px;padding:5px 8px;font-size:11px;color:#536078;z-index:2}
+.body{padding:16px}
+.title{font-size:14px;font-weight:750;border:0;background:none;padding:0;text-align:left;color:inherit;text-decoration:none;display:block}
+.desc{font-size:12px;line-height:1.7;color:#758095;min-height:42px;margin:9px 0}
+.tags{display:flex;gap:5px;flex-wrap:wrap}
+.tag{font-size:10px;background:#f1f3f8;color:#667187;border-radius:5px;padding:5px 8px}
+.card-bottom{border-top:1px solid #edf0f4;margin-top:15px;padding-top:12px;display:flex;justify-content:space-between;align-items:center}
+.like{background:white;border:1px solid #e7eaf0;border-radius:8px;padding:6px 10px;color:#667085;font-size:12px}
+.like.liked{color:#e34c78;background:#fff1f5;border-color:#ffd7e3}
+.callout{margin-top:48px;padding:30px;border-radius:17px;background:#f0f1ff;display:flex;justify-content:space-between;align-items:center;gap:20px}
+.subpage{padding:0 0 48px}
+.filters{display:flex;gap:8px;flex-wrap:wrap}
+.filter{border:1px solid #e7eaf0;border-radius:20px;background:white;padding:7px 13px;font-size:12px;color:#667085}
+.filter.active{background:#eef2ff;color:#4f46e5;border-color:#dce1ff}
+.toolbar{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin:26px 0 18px}
+select{border:1px solid #e7eaf0;border-radius:8px;padding:9px;background:white;color:#667085;font-size:12px}
+.aboutbox{background:#f7f8fc;border-radius:17px;padding:28px;display:flex;gap:22px;margin-top:28px}
+.avatar{width:88px;height:88px;flex:none;border-radius:20px;background:linear-gradient(135deg,#635bdf,#a78bfa);display:grid;place-items:center;color:white;font-size:28px;font-weight:800;overflow:hidden}
+.avatar img{width:100%;height:100%;object-fit:cover}
+.aboutbox p{font-size:13px;line-height:1.9;color:#758095}
+.socials{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:20px}
+.social{border:1px solid #e9edf3;border-radius:12px;padding:15px;display:flex;align-items:center;gap:12px;color:inherit;text-decoration:none}
+.social:hover{border-color:#a5b4fc;background:#fafaff}
+.socialicon{width:39px;height:39px;border-radius:10px;background:#f0f1ff;display:grid;place-items:center;font-weight:800;color:#5148d4;flex:none}
+.contactbox{background:#f7f8fc;border-radius:17px;padding:24px;margin-top:28px;display:grid;gap:12px}
+.contactbox .row{display:flex;gap:10px;font-size:13px;color:#758095}
+.contactbox b{color:#20283a;min-width:72px}
+footer{border-top:1px solid #edf0f4;margin-top:48px;padding:22px 0;color:#929bad;font-size:11px;display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.notice{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#20283a;color:white;border-radius:9px;padding:11px 16px;font-size:12px;opacity:0;transition:.2s;pointer-events:none;z-index:20}
+.notice.show{opacity:1}
+.detail-content{font-size:14px;line-height:2;color:#475569;white-space:pre-wrap}
+.breadcrumb{font-size:12px;color:#8993a4;margin:0}
+.breadcrumb a{color:#5148d4;text-decoration:none}
+@media(max-width:650px){
+  .wrap{padding:0 17px}.grid{grid-template-columns:1fr}.cover{height:135px}.socials{grid-template-columns:1fr}
+  .aboutbox{padding:20px;flex-direction:column}.callout{padding:23px;align-items:flex-start;flex-direction:column}.stats{gap:25px}
+  .brand{font-size:15px}
+  .nav-toggle{display:flex}
+  nav{position:absolute;top:64px;left:0;right:0;display:none;flex-direction:column;gap:4px;padding:12px 17px;background:#fff;border-bottom:1px solid #edf0f4;box-shadow:0 14px 28px #202b4516}
+  nav.open{display:flex}
+  nav .nav{padding:11px 13px;font-size:13px}
+}
+</style>
+
+</head>
+<body>
+<header class="top"><div class="wrap head">
+  <a class="brand" href="index.html">
+    <span class="logo"><img src="static/uploads/1794415035-c39875cddff3429d967f13d4e4ea0a35.png" alt="logo"></span>
+    <span>小小软件藏宝阁</span>
+  </a>
+  <nav id="site-nav">
+    <a class="nav " href="index.html">首页</a>
+    <a class="nav " href="projects.html">作品</a>
+    <a class="nav active" href="forme.html">关于我</a>
+  </nav>
+  <button class="nav-toggle" id="nav-toggle" aria-label="打开菜单" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
+</div></header>
+
+<main class="wrap">
+
+<section class="subpage">
+  <div class="eyebrow">ABOUT ME</div>
+  <h1 style="font-size:38px">关于我<span class="grad">.</span></h1>
+
+  <div class="aboutbox">
+    <div class="avatar">
+      <img src="static/uploads/1794412329-70a029fcaa5440ecace510e8913dd12d.jpg" alt="头像">
+    </div>
+    <div>
+      <h2 style="margin:0;font-size:20px">你好，我是一名独立创作者</h2>
+      <p>热爱软件开发与数字创作，喜欢将生活中的灵感转化为实用的产品。</p>
+      <p class="muted">独立开发者 / 全栈工程师</p>
+    </div>
+  </div>
+
+  <div style="margin-top:38px">
+    <h2 class="section-title">技能与职业</h2>
+    <p class="muted">持续学习，持续探索</p>
+    <div class="tags" style="margin-top:14px">
+      <span class="tag">前端开发</span><span class="tag">后端开发</span><span class="tag">AI 应用</span><span class="tag">产品设计</span><span class="tag">开源项目</span>
+    </div>
+  </div>
+
+  <div style="margin-top:38px">
+    <h2 class="section-title">找到我 · 社交媒体</h2>
+    <p class="muted">在不同平台分享技术、生活和创作。</p>
+    <div class="socials">
+      
+      <a class="social" href="https://www.douyin.com/user/MS4wLjABAAAAdkq8Y3kCM0dZZ9Pl7iJB4ozf4j1Nm4LzI7UTzZ_pxazoPctvR3HKnw42aqKmpe8l" target="_blank" rel="noopener">
+        <span class="socialicon">♪</span>
+        <span><b style="display:block;font-size:13px">抖音</b></span>
+        <span style="margin-left:auto">↗</span>
+      </a>
+      
+      <a class="social" href="https://mp.weixin.qq.com/s/cGg7dWjsYYRLvGgmVXtP3A" target="_blank" rel="noopener">
+        <span class="socialicon">微</span>
+        <span><b style="display:block;font-size:13px">微信公众号</b></span>
+        <span style="margin-left:auto">↗</span>
+      </a>
+      
+      <a class="social" href="https://github.com/orgs/g-websites/repositories" target="_blank" rel="noopener">
+        <span class="socialicon">⌘</span>
+        <span><b style="display:block;font-size:13px">GitHub</b></span>
+        <span style="margin-left:auto">↗</span>
+      </a>
+      
+      <a class="social" href="https://xhslink.cn/o/4cHdtiA3OTz" target="_blank" rel="noopener">
+        <span class="socialicon">红</span>
+        <span><b style="display:block;font-size:13px">小红书</b></span>
+        <span style="margin-left:auto">↗</span>
+      </a>
+      
+    </div>
+  </div>
+
+  <div class="contactbox">
+    <h2 class="section-title" style="margin:0">联系方式</h2>
+    <div class="row"><b>邮箱</b><span>1215629344@qq.com</span></div>
+    
+    
+    
+  </div>
+</section>
+
+</main>
+
+<footer class="wrap">
+  <span>© 2026 小小软件藏宝阁 · Made with passion.</span>
+  <span>1215629344@qq.com</span>
+</footer>
+
+<div id="notice" class="notice"></div>
+<script>
+const $ = s => document.querySelector(s);
+let noticeTimer;
+function toast(s){const n=$('#notice');n.textContent=s;n.classList.add('show');clearTimeout(noticeTimer);noticeTimer=setTimeout(()=>n.classList.remove('show'),2200)}
+// 窄屏导航折叠：汉堡按钮切换下拉菜单
+const navToggle=document.getElementById('nav-toggle'),siteNav=document.getElementById('site-nav');
+if(navToggle&&siteNav){
+  function setNav(open){
+    siteNav.classList.toggle('open',open);
+    navToggle.classList.toggle('open',open);
+    navToggle.setAttribute('aria-expanded',String(open));
+    navToggle.setAttribute('aria-label',open?'关闭菜单':'打开菜单');
+  }
+  navToggle.addEventListener('click',e=>{e.stopPropagation();setNav(!siteNav.classList.contains('open'))});
+  siteNav.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>setNav(false)));
+  document.addEventListener('click',e=>{
+    if(!siteNav.contains(e.target)&&!navToggle.contains(e.target))setNav(false);
+  });
+}
+async function toggleLike(id, btn){
+  const r = await fetch('/api/projects/'+id+'/like', {method:'POST', credentials:'same-origin'});
+  const data = await r.json().catch(()=>({detail:r.statusText}));
+  if(!r.ok) throw new Error(data.detail || r.statusText);
+  btn.classList.toggle('liked', data.liked);
+  btn.innerHTML = (data.liked ? '♥' : '♡') + ' <b>' + data.likes + '</b>';
+  return data;
+}
+document.addEventListener('click', async e=>{
+  const l = e.target.closest('[data-like]');
+  if(!l) return;
+  e.preventDefault();
+  try{
+    const data = await toggleLike(Number(l.dataset.like), l);
+    toast(data.liked ? '感谢你的喜欢 ♥' : '已取消点赞');
+  }catch(err){ toast(err.message); }
+});
+
+</script>
+</body></html>
